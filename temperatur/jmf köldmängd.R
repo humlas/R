@@ -2,7 +2,7 @@ library(ggplot2)
 library(dplyr) 
 library(lubridate) 
 library(scales) 
-library(hrbrthemes) 
+library(ggrepel)
 #Antal rader som ska skippas från csv filen, inkl rubrikraden 
 skiprowsattop = 11 
 title = "Köldmängd 2021/2022" 
@@ -282,6 +282,9 @@ for (row in 1:nrow(temp)) {
 } 
 # De år som ska framträda med färg 
 temp_filtered <- subset(temp, as.Date(Datum) >= "2017-10-01") 
+
+max_val <- max(temp_filtered$koldmangd)
+
 tempgraph <- 
   ggplot(temp_filtered, aes( 
     x = as.Date(mmdd, "%Y-%m-%d"), 
@@ -291,7 +294,7 @@ tempgraph <-
  
   geom_line(size = 1 ) + 
   
-  scale_y_continuous(name = "Graddagar", labels = scales::comma) + 
+  scale_y_continuous(name = "Graddagar", labels = scales::comma, breaks = seq(0, max_val, by = 100), limits=c(0, max_val)) + 
   scale_x_date(name = "Månad", 
                labels = date_format("%b"), 
                date_breaks = "1 month") + 
