@@ -299,11 +299,10 @@ tempgraph <-
                labels = date_format("%b"), 
                date_breaks = "1 month") + 
   ggtitle(title) + 
-  
+
   geom_label_repel(aes(label = Ort),
-                   data = temp_filtered %>% filter(Datum == max(Datum)),
-                   size = 3, max.overlaps = 10) +
- 
+                   data = temp_filtered %>% filter(Datum == max(Datum))) +
+
   
   theme( 
     legend.position = c(.25, .95), 
